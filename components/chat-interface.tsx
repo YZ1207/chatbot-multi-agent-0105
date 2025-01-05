@@ -269,42 +269,53 @@ const ChatInterface = () => {
       </CardContent>
       
       <CardFooter className="border-t p-4">
-        <form onSubmit={handleSendMessage} className="flex w-full gap-2 items-center">
-          <Button variant="outline" size="icon" type="button" disabled={isLoading}>
-            <Paperclip className="h-4 w-4" />
-          </Button>
-          <Input 
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder='给"ChatGPT"发送消息'
-            className="flex-1"
-            disabled={isLoading}
-          />
-          <Button 
-            variant={isWebEnabled ? "default" : "outline"} 
-            size="icon" 
-            type="button" 
-            disabled={isLoading}
-            onClick={() => setIsWebEnabled(!isWebEnabled)}
-          >
-            <Globe className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="icon" type="button" disabled={isLoading}>
-            <Mic className="h-4 w-4" />
-          </Button>
-          <Button type="submit" size="icon" disabled={isLoading}>
-            <Send className="h-4 w-4" />
-          </Button>
-          <Button 
-            variant="outline" 
-            size="icon" 
-            type="button" 
-            onClick={() => setShowRatingDialog(true)}
-            disabled={isLoading}
-          >
-            <ThumbsUp className="h-4 w-4" />
-          </Button>
-        </form>
+        <div className="flex flex-col w-full gap-2">
+          <div className="flex gap-2 w-full">
+            <Button variant="outline" className="flex-1">
+              历史随访满意度
+            </Button>
+            <Button variant="outline" className="flex-1">
+              患者详情
+            </Button>
+          </div>
+          
+          <form onSubmit={handleSendMessage} className="flex w-full gap-2 items-center">
+            <Button variant="outline" size="icon" type="button" disabled={isLoading}>
+              <Paperclip className="h-4 w-4" />
+            </Button>
+            <Input 
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder='给"ChatGPT"发送消息'
+              className="flex-1"
+              disabled={isLoading}
+            />
+            <Button 
+              variant={isWebEnabled ? "default" : "outline"} 
+              size="icon" 
+              type="button" 
+              disabled={isLoading}
+              onClick={() => setIsWebEnabled(!isWebEnabled)}
+            >
+              <Globe className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" type="button" disabled={isLoading}>
+              <Mic className="h-4 w-4" />
+            </Button>
+            <Button type="submit" size="icon" disabled={isLoading}>
+              <Send className="h-4 w-4" />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="icon" 
+              type="button" 
+              onClick={() => setShowRatingDialog(true)}
+              disabled={isLoading}
+            >
+              <ThumbsUp className="h-4 w-4" />
+            </Button>
+          </form>
+        </div>
       </CardFooter>
       <RatingDialog 
         open={showRatingDialog}
