@@ -225,7 +225,7 @@ const ChatInterface = () => {
               {message.role === 'ai' && (
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/placeholder.svg" alt="AI Avatar" />
-                  <AvatarFallback>AI</AvatarFallback>
+                  <AvatarFallback>医院</AvatarFallback>
                 </Avatar>
               )}
               <div className={`flex-1 ${message.role === 'user' ? 'max-w-[80%]' : ''}`}>
@@ -240,7 +240,7 @@ const ChatInterface = () => {
               {message.role === 'user' && (
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/placeholder.svg" alt="User Avatar" />
-                  <AvatarFallback>U</AvatarFallback>
+                  <AvatarFallback>患者</AvatarFallback>
                 </Avatar>
               )}
             </div>
