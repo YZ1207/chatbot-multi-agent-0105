@@ -95,13 +95,8 @@ const CommentatorAgent: React.FC<CommentatorAgentProps> = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-      <h3 className="font-bold mb-2">评论员的思考</h3>
-      {isLoading ? (
-        <p className="text-gray-500">正在分析对话...</p>
-      ) : (
-        <p className="text-gray-700">{comment}</p>
-      )}
+    <div className="text-blue-700">
+      {comment}
     </div>
   );
 };

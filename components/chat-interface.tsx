@@ -5,8 +5,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Paperclip, Globe, Mic, Send } from 'lucide-react'
+import { Paperclip, Globe, Mic, Send, ThumbsUp } from 'lucide-react'
 import CommentatorAgent from "@/components/commentator-agent"
+import { RatingDialog } from './rating-dialog'
 
 // 定义消息类型
 type Message = {
@@ -64,6 +65,7 @@ const ChatInterface = () => {
   const [isWebEnabled, setIsWebEnabled] = useState(false)
   const [commentatorMessage, setCommentatorMessage] = useState<string | null>(null)
   const [showCommentator, setShowCommentator] = useState(false)
+  const [showRatingDialog, setShowRatingDialog] = useState(false)
   
   // 取消未完成的请求
   useEffect(() => {
@@ -216,6 +218,15 @@ const ChatInterface = () => {
     }
   }
 
+  // 添加处理评分提交的函数
+  const handleRatingSubmit = (rating: number) => {
+    setMessages(prev => [...prev, {
+      id: Date.now(),
+      content: "感谢您的反馈！",
+      role: "ai"
+    }])
+  }
+
   return (
     <Card className="w-full max-w-3xl mx-auto h-[600px] flex flex-col">
       <CardContent className="flex-1 overflow-auto p-4 space-y-4">
@@ -247,7 +258,13 @@ const ChatInterface = () => {
           ))}
         </div>
         {showCommentator && messages.length > 0 && (
-          <CommentatorAgent messages={messages} />
+          <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <span role="img" aria-label="doctor" className="text-xl">👨‍⚕️</span>
+              <span className="font-semibold text-blue-800">医生点评</span>
+            </div>
+            <CommentatorAgent messages={messages} />
+          </div>
         )}
       </CardContent>
       
@@ -278,8 +295,22 @@ const ChatInterface = () => {
           <Button type="submit" size="icon" disabled={isLoading}>
             <Send className="h-4 w-4" />
           </Button>
+          <Button 
+            variant="outline" 
+            size="icon" 
+            type="button" 
+            onClick={() => setShowRatingDialog(true)}
+            disabled={isLoading}
+          >
+            <ThumbsUp className="h-4 w-4" />
+          </Button>
         </form>
       </CardFooter>
+      <RatingDialog 
+        open={showRatingDialog}
+        onOpenChange={setShowRatingDialog}
+        onSubmit={handleRatingSubmit}
+      />
     </Card>
   )
 }
