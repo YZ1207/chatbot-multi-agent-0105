@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Paperclip, Globe, Mic, Send, ThumbsUp } from 'lucide-react'
 import CommentatorAgent from "@/components/commentator-agent"
 import { RatingDialog } from './rating-dialog'
+import { PatientDetailsDialog, type PatientInfo } from './patient-details-dialog'
 
 // 定义消息类型
 type Message = {
@@ -66,7 +67,62 @@ const ChatInterface = () => {
   const [commentatorMessage, setCommentatorMessage] = useState<string | null>(null)
   const [showCommentator, setShowCommentator] = useState(false)
   const [showRatingDialog, setShowRatingDialog] = useState(false)
+  const [showPatientDetails, setShowPatientDetails] = useState(false)
   
+  // 模拟的患者数据
+  const mockPatientInfo: PatientInfo = {
+    basicInfo: {
+      name: "张三",
+      gender: "男",
+      age: 45,
+      height: 172,
+      weight: 70,
+      bloodType: "A型"
+    },
+    medicalHistory: [
+      {
+        condition: "高血压",
+        diagnosisDate: "2020-03-15",
+        details: "原发性高血压，最高收缩压180mmHg"
+      },
+      {
+        condition: "2型糖尿病",
+        diagnosisDate: "2021-06-20",
+        details: "空腹血糖7.8mmol/L，糖化血红蛋白6.8%"
+      }
+    ],
+    medications: [
+      {
+        name: "缬沙坦胶囊",
+        dosage: "80mg",
+        frequency: "每日一次",
+        startDate: "2020-03-15"
+      },
+      {
+        name: "二甲双胍片",
+        dosage: "0.5g",
+        frequency: "每日两次",
+        startDate: "2021-06-20"
+      }
+    ],
+    consultations: [
+      {
+        date: "2024-01-15",
+        doctor: "李医生",
+        department: "内分泌科",
+        diagnosis: "糖尿病控制良好",
+        prescription: "二甲双胍片 0.5g 早晚各一次"
+      },
+      {
+        date: "2023-12-15",
+        doctor: "王医生",
+        department: "心内科",
+        diagnosis: "高血压控制稳定",
+        prescription: "缬沙坦胶囊 80mg 每日一次"
+      }
+    ]
+  }
+
   // 取消未完成的请求
   useEffect(() => {
     return () => {
@@ -274,7 +330,11 @@ const ChatInterface = () => {
             <Button variant="outline" className="flex-1">
               历史随访满意度
             </Button>
-            <Button variant="outline" className="flex-1">
+            <Button 
+              variant="outline" 
+              className="flex-1"
+              onClick={() => setShowPatientDetails(true)}
+            >
               患者详情
             </Button>
           </div>
@@ -321,6 +381,11 @@ const ChatInterface = () => {
         open={showRatingDialog}
         onOpenChange={setShowRatingDialog}
         onSubmit={handleRatingSubmit}
+      />
+      <PatientDetailsDialog
+        open={showPatientDetails}
+        onOpenChange={setShowPatientDetails}
+        patientInfo={mockPatientInfo}
       />
     </Card>
   )
